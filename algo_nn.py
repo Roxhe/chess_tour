@@ -36,11 +36,11 @@ print("classement :\n",score_all_player)
 print("liste des joueurs triée selon le classement :\n", list_players,
       "\n")
 
-n = True
-while n:
+
+while True:
     list_players_fm = list_players
     print("Début Tour")
-
+    j = 2
     for i in range(len(list_players_fm)):
         i = 0
         if len(list_players_fm) == 0:
@@ -64,23 +64,44 @@ while n:
 
         else:
             try:
-                print(list_players_fm)
-                played_match.append((list_players[i], list_players[i + 2]))
-                print(list_players[i], list_players[i + 2])
-                result = int(input("Qui est le gagnant ? (si égalité rentrez : 0) \n"))
-                if result == 0:
-                    score_all_player[list_players_fm[i]] += 0.5
-                    score_all_player[list_players_fm[i+2]] += 0.5
-                elif result == list_players_fm[i+2]:
-                    score_all_player[list_players_fm[i+2]] += 1
-                elif result == list_players_fm[i]:
-                    score_all_player[list_players_fm[i]] += 1
+                if (list_players[i], list_players[i + j]) not in played_match:
+                    try:
+                        print(list_players_fm)
+                        played_match.append((list_players[i], list_players[i + j]))
+                        print(list_players[i], list_players[i + j])
+                        result = int(input("Qui est le gagnant ? (si égalité rentrez : 0) \n"))
+                        if result == 0:
+                            score_all_player[list_players_fm[i]] += 0.5
+                            score_all_player[list_players_fm[i+j]] += 0.5
+                        elif result == list_players_fm[i+j]:
+                            score_all_player[list_players_fm[i+j]] += 1
+                        elif result == list_players_fm[i]:
+                            score_all_player[list_players_fm[i]] += 1
 
-                list_players_fm.remove(list_players_fm[i])
-                list_players_fm.remove(list_players_fm[i+1])
-                print(list_players_fm)
+                        list_players_fm.remove(list_players_fm[i])
+                        list_players_fm.remove(list_players_fm[i+j-1])
+                        print(list_players_fm)
+
+                    except IndexError:
+
+                        played_match.append((list_players[i], list_players[i + 1]))
+
+                        print(list_players[i], list_players[i + 1])
+                        result = int(input("Qui est le gagnant ? (si égalité rentrez : 0) \n"))
+                        if result == 0:
+                            score_all_player[list_players_fm[i]] += 0.5
+                            score_all_player[list_players_fm[i + 1]] += 0.5
+                        elif result == list_players_fm[i + 1]:
+                            score_all_player[list_players_fm[i + 1]] += 1
+                        elif result == list_players_fm[i]:
+                            score_all_player[list_players_fm[i]] += 1
+
+                        list_players_fm.remove(list_players_fm[i])
+                        list_players_fm.remove(list_players_fm[i])
+
+                else:
+                    j += 1
             except IndexError:
-
                 played_match.append((list_players[i], list_players[i + 1]))
 
                 print(list_players[i], list_players[i + 1])
